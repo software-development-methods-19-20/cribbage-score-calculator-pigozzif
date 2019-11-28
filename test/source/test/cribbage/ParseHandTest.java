@@ -40,13 +40,17 @@ public class ParseHandTest {
     @Test
     void scoreRun() {
         ArrayList<Card> testHand0 = CardParser.parseHand("5H2D5SJC5C");
-        assertThat(HandScorer.checkRuns(testHand0), is(0));
+        HandScorer scorer0 = new HandScorer(testHand0);
+        assertThat(scorer0.checkRuns(), is(0));
         ArrayList<Card> testHand1 = CardParser.parseHand("5H6C7D9D8C");
-        assertThat(HandScorer.checkRuns(testHand1), is(3));
+        HandScorer scorer1 = new HandScorer(testHand1);
+        assertThat(scorer1.checkRuns(), is(3));
         ArrayList<Card> testHand2 = CardParser.parseHand("4H7C8C9SKS");
-        assertThat(HandScorer.checkRuns(testHand2), is(4));
+        HandScorer scorer2 = new HandScorer(testHand2);
+        assertThat(scorer2.checkRuns(), is(4));
         ArrayList<Card> testHand3 = CardParser.parseHand("2S3H4D5D6C");
-        assertThat(HandScorer.checkRuns(testHand3), is(5));
+        HandScorer scorer3 = new HandScorer(testHand3);
+        assertThat(scorer3.checkRuns(), is(5));
     }
 
 

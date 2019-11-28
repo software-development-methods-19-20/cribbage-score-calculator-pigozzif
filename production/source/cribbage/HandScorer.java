@@ -3,17 +3,22 @@ package cribbage;
 import java.util.ArrayList;
 
 public class HandScorer {
+    private ArrayList<Card> hand;
 
-    public static int scoreHand(ArrayList<Card> hand) {
-        return checkRuns(hand);
+    public HandScorer(ArrayList<Card> hand) {
+        this.hand = hand;
     }
 
-    public static int checkRuns(ArrayList<Card> hand) {
+    public int scoreHand() {
+        return checkRuns();
+    }
+
+    public int checkRuns() {
         int bestTotal = 0;
         int currTotal = 0;
-        int precValue = hand.get(0).getValue();
-        for (int i=1; i < hand.size(); ++i) {
-            int currValue = hand.get(i).getValue();
+        int precValue = this.hand.get(0).getValue();
+        for (int i=1; i < this.hand.size(); ++i) {
+            int currValue = this.hand.get(i).getValue();
             if (currValue - precValue == 1) {
                 currTotal += 1;
                 bestTotal = Math.max(currTotal, bestTotal);
