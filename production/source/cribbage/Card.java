@@ -30,6 +30,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return this.rank + this.suite.toString().substring(0, 1);
+        return this.rank + this.suite.toString();
     }
 }
