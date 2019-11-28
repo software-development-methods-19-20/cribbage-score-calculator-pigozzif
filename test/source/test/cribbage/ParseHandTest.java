@@ -25,4 +25,16 @@ public class ParseHandTest {
         ArrayList<Card> result = CardParser.parseHand("5H5D5SJC5C");
         assertThat(result.stream().map(Card::toString).toArray(), is(cardStrings));
     }
+
+    @Test
+    void testValues() {
+        Card c1 = new Card("5", "H");
+        assertThat(c1.getValue(), is(5));
+        Card c2 = new Card("A", "H");
+        assertThat(c2.getValue(), is(1));
+        Card c3 = new Card("Q", "H");
+        assertThat(c3.getValue(), is(10));
+    }
+
+
 }
