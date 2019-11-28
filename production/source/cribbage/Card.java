@@ -1,12 +1,21 @@
 package cribbage;
 
 public class Card {
+    private String rank;
+    private Suite suite;
+
+    public Card(String rank, String suite) {
+        this.rank = rank;
+        if (suite.equals("H")) {
+            this.suite = Suite.HEART;
+        }
+    }
 
     public String rank() {
-        return "5";
+        return this.rank;
     }
 
     public Suite suite() {
-        return Suite.HEART;
+        return this.suite;
     }
 }
