@@ -1,6 +1,8 @@
 package cribbage;
 
-import java.util.ArrayList;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class HandScorer {
     private ArrayList<Card> hand;
@@ -35,6 +37,11 @@ public class HandScorer {
     }
 
     public int checkPairs() {
-        return -1;
+        HashMap<Long, Integer> rules = new HashMap<>();
+        rules.put((long) 2, 2);
+        rules.put((long) 3, 6);
+        rules.put((long) 4, 12);
+        Map<String, Long> occurences = this.hand.stream().collect(Collectors.groupingBy(Card::rank, Collectors.counting()));
+        return occurences.values().stream().filter(x -> x > 1).mapToInt(rules::get).reduce(0, Integer::sum);
     }
 }

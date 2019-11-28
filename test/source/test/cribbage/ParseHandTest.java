@@ -62,13 +62,11 @@ public class ParseHandTest {
         assertThat(scorer1.checkPairs(), is(2));
         HandScorer scorer2 = getScorer("QHQC8C9SQS");
         assertThat(scorer2.checkPairs(), is(6));
-        HandScorer scorer3 = getScorer("3S3H3D3D3C");
+        HandScorer scorer3 = getScorer("3S3H3D3DJC");
         assertThat(scorer3.checkPairs(), is(12));
         HandScorer scorer4 = getScorer("AHAC9D9D8C");
         assertThat(scorer4.checkPairs(), is(4));
         HandScorer scorer5 = getScorer("7H6C7D6D6C");
         assertThat(scorer5.checkPairs(), is(8));
     }
-
-
 }
