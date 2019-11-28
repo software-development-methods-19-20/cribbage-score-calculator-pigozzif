@@ -22,8 +22,7 @@ public class ParseHandTest {
     @Test
     void parseOneHand() {
         String[] cardStrings = {"5H", "5D", "5S", "JC", "5C"};
-        for (String card: cardStrings) {
-            assertThat(, is(card));
-        }
+        ArrayList<Card> result = CardParser.parseHand("5H5D5SJC5C");
+        assertThat(result.stream().map(Card::toString).toArray(), is(cardStrings));
     }
 }

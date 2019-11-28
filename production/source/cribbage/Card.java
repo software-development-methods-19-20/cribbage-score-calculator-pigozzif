@@ -9,6 +9,15 @@ public class Card {
         if (suite.equals("H")) {
             this.suite = Suite.HEART;
         }
+        else if (suite.equals("D")) {
+            this.suite = Suite.DIAMOND;
+        }
+        else if (suite.equals("S")) {
+            this.suite = Suite.SPADE;
+        }
+        else {
+            this.suite = Suite.CLUB;
+        }
     }
 
     public String rank() {
@@ -17,5 +26,10 @@ public class Card {
 
     public Suite suite() {
         return this.suite;
+    }
+
+    @Override
+    public String toString() {
+        return this.rank + this.suite.toString().substring(0, 1);
     }
 }
