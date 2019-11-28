@@ -33,4 +33,8 @@ public class HandScorer {
         }
         return bestTotal + 1;
     }
+
+    public int checkPairs() {
+        return -1;
+    }
 }

@@ -37,20 +37,37 @@ public class ParseHandTest {
         assertThat(c3.getValue(), is(10));
     }
 
+    private static HandScorer getScorer(String handText) {
+        ArrayList<Card> testHand = CardParser.parseHand(handText);
+        return new HandScorer(testHand);
+    }
+
     @Test
     void scoreRun() {
-        ArrayList<Card> testHand0 = CardParser.parseHand("5H2D5SJC5C");
-        HandScorer scorer0 = new HandScorer(testHand0);
+        HandScorer scorer0 = getScorer("5H2D5SJC5C");
         assertThat(scorer0.checkRuns(), is(0));
-        ArrayList<Card> testHand1 = CardParser.parseHand("5H6C7D9D8C");
-        HandScorer scorer1 = new HandScorer(testHand1);
+        HandScorer scorer1 = getScorer("5H6C7D9D8C");
         assertThat(scorer1.checkRuns(), is(3));
-        ArrayList<Card> testHand2 = CardParser.parseHand("4H7C8C9SKS");
-        HandScorer scorer2 = new HandScorer(testHand2);
+        HandScorer scorer2 = getScorer("4H7C8C9SKS");
         assertThat(scorer2.checkRuns(), is(4));
-        ArrayList<Card> testHand3 = CardParser.parseHand("2S3H4D5D6C");
-        HandScorer scorer3 = new HandScorer(testHand3);
+        HandScorer scorer3 = getScorer("2S3H4D5D6C");
         assertThat(scorer3.checkRuns(), is(5));
+    }
+
+    @Test
+    void scorePairs() {
+        HandScorer scorer0 = getScorer("1H2D3S4C5C");
+        assertThat(scorer0.checkPairs(), is(0));
+        HandScorer scorer1 = getScorer("7H6C7D9D8C");
+        assertThat(scorer1.checkPairs(), is(2));
+        HandScorer scorer2 = getScorer("QHQC8C9SQS");
+        assertThat(scorer2.checkPairs(), is(6));
+        HandScorer scorer3 = getScorer("3S3H3D3D3C");
+        assertThat(scorer3.checkPairs(), is(12));
+        HandScorer scorer4 = getScorer("AHAC9D9D8C");
+        assertThat(scorer4.checkPairs(), is(4));
+        HandScorer scorer5 = getScorer("7H6C7D6D6C");
+        assertThat(scorer5.checkPairs(), is(8));
     }
 
 
