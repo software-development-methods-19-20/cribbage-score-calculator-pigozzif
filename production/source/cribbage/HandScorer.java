@@ -2,7 +2,6 @@ package cribbage;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class HandScorer {
     private ArrayList<Card> hand;
@@ -12,7 +11,10 @@ public class HandScorer {
     }
 
     public int scoreHand() {
-        return checkRuns();
+        int total = 0;
+        total += checkRuns();
+        total += checkPairs();
+        return total;
     }
 
     public int checkRuns() {
@@ -41,7 +43,37 @@ public class HandScorer {
         rules.put((long) 2, 2);
         rules.put((long) 3, 6);
         rules.put((long) 4, 12);
-        Map<String, Long> occurences = this.hand.stream().collect(Collectors.groupingBy(Card::rank, Collectors.counting()));
-        return occurences.values().stream().filter(x -> x > 1).mapToInt(rules::get).reduce(0, Integer::sum);
+        return this.hand.stream().collect(Collectors.groupingBy(Card::rank, Collectors.counting())).values().stream().filter(x -> x > 1).mapToInt(rules::get).reduce(0, Integer::sum);
+        //return occurences.values().stream().filter(x -> x > 1).mapToInt(rules::get).reduce(0, Integer::sum);
+    }
+
+    public int checkFlush() {
+        int flushTotal = 0;
+        int jackTotal = 0;
+        Suite starterSuite = this.hand.get(this.hand.size() - 1).suite();
+        Suite precSuite = this.hand.get(0).suite();
+        for (int i=1; i < this.hand.size(); ++i) {
+            Card c = this.hand.get(i);
+            Suite currSuite = c.suite();
+            if (c.rank().equals("J") & starterSuite == currSuite) {
+                jackTotal += 1;
+            }
+            if (currSuite == precSuite) {
+                flushTotal += 1;
+            }
+            else {
+                flushTotal = 0;
+            }
+            precSuite = currSuite;
+        }
+        return flushTotal + jackTotal;
+    }
+
+    public int checkFifteenTwos() {
+        for (Card c: this.hand) {
+            int currValue = c.getValue();
+            return 0;
+        }
+        return 0;
     }
 }

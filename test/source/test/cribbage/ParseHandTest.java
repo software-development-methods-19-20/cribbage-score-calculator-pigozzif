@@ -56,8 +56,8 @@ public class ParseHandTest {
 
     @Test
     void scorePairs() {
-        HandScorer scorer0 = getScorer("1H2D3S4C5C");
-        assertThat(scorer0.checkPairs(), is(0));
+        HandScorer scorer = getScorer("1H2D3S4C5C");
+        assertThat(scorer.checkPairs(), is(0));
         HandScorer scorer1 = getScorer("7H6C7D9D8C");
         assertThat(scorer1.checkPairs(), is(2));
         HandScorer scorer2 = getScorer("QHQC8C9SQS");
@@ -68,5 +68,25 @@ public class ParseHandTest {
         assertThat(scorer4.checkPairs(), is(4));
         HandScorer scorer5 = getScorer("7H6C7D6D6C");
         assertThat(scorer5.checkPairs(), is(8));
+    }
+
+    @Test
+    void scoreFlush() {
+        HandScorer scorer = getScorer("1H2H3H4H5H");
+        assertThat(scorer.checkFlush(), is(4));
+        HandScorer scorer1 = getScorer("3S3HJC3DKC");
+        assertThat(scorer1.checkFlush(), is(1));
+        HandScorer scorer2 = getScorer("3C3CJC3CKC");
+        assertThat(scorer2.checkFlush(), is(5));
+    }
+
+    @Test
+    void scoreFifteenTwos() {
+        HandScorer scorer = getScorer("1H2D3S4C5C");
+        assertThat(scorer.checkFifteenTwos(), is(0));
+        HandScorer scorer1 = getScorer("7H6C7D9D8C");
+        assertThat(scorer1.checkFifteenTwos(), is(6));
+        HandScorer scorer4 = getScorer("AHQC5D8D5C");
+        assertThat(scorer4.checkFifteenTwos(), is(4));
     }
 }
