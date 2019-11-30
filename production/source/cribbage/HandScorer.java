@@ -11,10 +11,10 @@ public class HandScorer {
     }
 
     public int scoreHand() {
-        return checkRuns() + scorePairs() + checkFlush() + checkFifteenTwos();
+        return scoreRuns() + scorePairs() + scoreFlush() + scoreFifteenTwos();
     }
 
-    public int checkRuns() {
+    public int scoreRuns() {
         int bestTotal = 0;
         int currTotal = 0;
         int precValue = this.hand.get(0).getValue();
@@ -44,7 +44,7 @@ public class HandScorer {
                 filter(x -> x > 1).mapToInt(rules::get).reduce(0, Integer::sum);
     }
 
-    public int checkFlush() {
+    public int scoreFlush() {
         int flushTotal = 1;
         int jackTotal = 0;
         Suite starterSuite = this.hand.get(this.hand.size() - 1).suite();
@@ -65,8 +65,8 @@ public class HandScorer {
         return flushTotal + jackTotal;
     }
 
-    public int checkFifteenTwos() {
+    public int scoreFifteenTwos() {
         FifteenTwos scorer = new FifteenTwos();
-        return scorer.checkFifteenTwos(this.hand);
+        return scorer.score(this.hand);
     }
 }

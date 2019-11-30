@@ -11,7 +11,7 @@ public class FifteenTwos {
         this.duplicates = new HashSet<>();
     }
 
-    public int checkFifteenTwos(ArrayList<Card> hand) {
+    public int score(ArrayList<Card> hand) {
         hand.sort(Comparator.comparing(Card::rank).thenComparing(Card::suite));
         return scoreAndGrow(hand);
     }

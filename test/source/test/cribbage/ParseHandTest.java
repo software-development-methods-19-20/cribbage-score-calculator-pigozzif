@@ -43,15 +43,15 @@ public class ParseHandTest {
     }
 
     @Test
-    void scoreRun() {
+    void checkRun() {
         HandScorer scorer0 = getScorer("5H2D5SJC5C");
-        assertThat(scorer0.checkRuns(), is(0));
+        assertThat(scorer0.scoreRuns(), is(0));
         HandScorer scorer1 = getScorer("5H6C7D9D8C");
-        assertThat(scorer1.checkRuns(), is(3));
+        assertThat(scorer1.scoreRuns(), is(3));
         HandScorer scorer2 = getScorer("4H7C8C9SKS");
-        assertThat(scorer2.checkRuns(), is(4));
+        assertThat(scorer2.scoreRuns(), is(4));
         HandScorer scorer3 = getScorer("2S3H4D5D6C");
-        assertThat(scorer3.checkRuns(), is(5));
+        assertThat(scorer3.scoreRuns(), is(5));
     }
 
     @Test
@@ -71,23 +71,23 @@ public class ParseHandTest {
     }
 
     @Test
-    void scoreFlush() {
+    void checkFlush() {
         HandScorer scorer = getScorer("1H2H3H4H5H");
-        assertThat(scorer.checkFlush(), is(5));
+        assertThat(scorer.scoreFlush(), is(5));
         HandScorer scorer1 = getScorer("3S3HJC3DKC");
-        assertThat(scorer1.checkFlush(), is(1));
+        assertThat(scorer1.scoreFlush(), is(1));
         HandScorer scorer2 = getScorer("3C3CJC3CKC");
-        assertThat(scorer2.checkFlush(), is(6));
+        assertThat(scorer2.scoreFlush(), is(6));
     }
 
     @Test
-    void scoreFifteenTwos() {
+    void checkFifteenTwos() {
         HandScorer scorer = getScorer("1H2D3S4C5C");
-        assertThat(scorer.checkFifteenTwos(), is(2));
+        assertThat(scorer.scoreFifteenTwos(), is(2));
         HandScorer scorer1 = getScorer("7H6C7D9D8C");
-        assertThat(scorer1.checkFifteenTwos(), is(6));
+        assertThat(scorer1.scoreFifteenTwos(), is(6));
         HandScorer scorer2 = getScorer("AHQC5D8D5C");
-        assertThat(scorer2.checkFifteenTwos(), is(4));
+        assertThat(scorer2.scoreFifteenTwos(), is(4));
     }
 
     @Test
