@@ -1,6 +1,7 @@
 package cribbage;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 public class HandScorer {
     private ArrayList<Card> hand;
@@ -10,26 +11,11 @@ public class HandScorer {
     }
 
     public int scoreHand() {
-        return scoreRuns() + scorePairs() + scoreFlush() + scoreFifteenTwos();
+        return createScorer(Runs::new).score(this.hand) + createScorer(Pairs::new).score(this.hand)
+                + createScorer(Flush::new).score(this.hand) + createScorer(FifteenTwos::new).score(this.hand);
     }
 
-    public int scoreRuns() {
-        Runs scorer = new Runs();
-        return scorer.score(this.hand);
-    }
-
-    public int scorePairs() {
-        Pairs scorer = new Pairs();
-        return scorer.score(this.hand);
-    }
-
-    public int scoreFlush() {
-        Flush scorer = new Flush();
-        return scorer.score(this.hand);
-    }
-
-    public int scoreFifteenTwos() {
-        FifteenTwos scorer = new FifteenTwos();
-        return scorer.score(this.hand);
+    public static <T extends Scorer> T createScorer(Supplier<? extends T> ctor) {
+        return ctor.get();
     }
 }

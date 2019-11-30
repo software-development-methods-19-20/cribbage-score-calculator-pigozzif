@@ -2,10 +2,11 @@ package cribbage;
 
 import java.util.ArrayList;
 
-public class Flush {
+public class Flush implements Scorer {
 
     public Flush() {}
 
+    @Override
     public int score(ArrayList<Card> hand) {
         int flushTotal = 1;
         int jackTotal = 0;

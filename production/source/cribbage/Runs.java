@@ -2,10 +2,11 @@ package cribbage;
 
 import java.util.ArrayList;
 
-public class Runs {
+public class Runs implements Scorer{
 
     public Runs() {}
 
+    @Override
     public int score(ArrayList<Card> hand) {
         int bestTotal = 0;
         int currTotal = 0;

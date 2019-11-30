@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
-public class Pairs {
+public class Pairs implements Scorer{
     private HashMap<Long, Integer> rules;
 
     public Pairs() {
@@ -14,6 +14,7 @@ public class Pairs {
         rules.put((long) 4, 12);
     }
 
+    @Override
     public int score(ArrayList<Card> hand) {
         return hand.stream().collect(Collectors.groupingBy(Card::rank, Collectors.counting())).values().stream().
                 filter(x -> x > 1).mapToInt(this.rules::get).reduce(0, Integer::sum);

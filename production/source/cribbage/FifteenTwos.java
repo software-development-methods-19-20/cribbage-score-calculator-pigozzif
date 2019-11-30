@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 
-public class FifteenTwos {
+public class FifteenTwos implements Scorer{
     private HashSet<String> duplicates;
 
     public FifteenTwos() {
         this.duplicates = new HashSet<>();
     }
 
+    @Override
     public int score(ArrayList<Card> hand) {
         hand.sort(Comparator.comparing(Card::rank).thenComparing(Card::suite));
         return scoreAndGrow(hand);

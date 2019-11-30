@@ -1,11 +1,9 @@
 package test.cribbage;
 
-import cribbage.Card;
-import cribbage.CardParser;
-import cribbage.HandScorer;
-import cribbage.Suite;
+import cribbage.*;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -44,50 +42,66 @@ public class ParseHandTest {
 
     @Test
     void checkRun() {
-        HandScorer scorer0 = getScorer("5H2D5SJC5C");
-        assertThat(scorer0.scoreRuns(), is(0));
-        HandScorer scorer1 = getScorer("5H6C7D9D8C");
-        assertThat(scorer1.scoreRuns(), is(3));
-        HandScorer scorer2 = getScorer("4H7C8C9SKS");
-        assertThat(scorer2.scoreRuns(), is(4));
-        HandScorer scorer3 = getScorer("2S3H4D5D6C");
-        assertThat(scorer3.scoreRuns(), is(5));
+        Runs scorer0 = HandScorer.createScorer(Runs::new);
+        ArrayList<Card> hand0 = CardParser.parseHand("5H2D5SJC5C");
+        assertThat(scorer0.score(hand0), is(0));
+        Runs scorer1 = HandScorer.createScorer(Runs::new);
+        ArrayList<Card> hand1 = CardParser.parseHand("5H6C7D9D8C");
+        assertThat(scorer1.score(hand1), is(3));
+        Runs scorer2 = HandScorer.createScorer(Runs::new);
+        ArrayList<Card> hand2 = CardParser.parseHand("4H7C8C9SKS");
+        assertThat(scorer2.score(hand2), is(4));
+        Runs scorer3 = HandScorer.createScorer(Runs::new);
+        ArrayList<Card> hand3 = CardParser.parseHand("2S3H4D5D6C");
+        assertThat(scorer3.score(hand3), is(5));
     }
 
     @Test
     void checkPairs() {
-        HandScorer scorer = getScorer("1H2D3S4C5C");
-        assertThat(scorer.scorePairs(), is(0));
-        HandScorer scorer1 = getScorer("7H6C7D9D8C");
-        assertThat(scorer1.scorePairs(), is(2));
-        HandScorer scorer2 = getScorer("QHQC8C9SQS");
-        assertThat(scorer2.scorePairs(), is(6));
-        HandScorer scorer3 = getScorer("3S3H3D3DJC");
-        assertThat(scorer3.scorePairs(), is(12));
-        HandScorer scorer4 = getScorer("AHAC9D9D8C");
-        assertThat(scorer4.scorePairs(), is(4));
-        HandScorer scorer5 = getScorer("7H6C7D6D6C");
-        assertThat(scorer5.scorePairs(), is(8));
+        Pairs scorer0 = HandScorer.createScorer(Pairs::new);
+        ArrayList<Card> hand0 = CardParser.parseHand("1H2D3S4C5C");
+        assertThat(scorer0.score(hand0), is(0));
+        Pairs scorer1 = HandScorer.createScorer(Pairs::new);
+        ArrayList<Card> hand1 = CardParser.parseHand("7H6C7D9D8C");
+        assertThat(scorer1.score(hand1), is(2));
+        Pairs scorer2 = HandScorer.createScorer(Pairs::new);
+        ArrayList<Card> hand2 = CardParser.parseHand("QHQC8C9SQS");
+        assertThat(scorer2.score(hand2), is(6));
+        Pairs scorer3 = HandScorer.createScorer(Pairs::new);
+        ArrayList<Card> hand3 = CardParser.parseHand("3S3H3D3DJC");
+        assertThat(scorer3.score(hand3), is(12));
+        Pairs scorer4 = HandScorer.createScorer(Pairs::new);
+        ArrayList<Card> hand4 = CardParser.parseHand("AHAC9D9D8C");
+        assertThat(scorer4.score(hand4), is(4));
+        Pairs scorer5 = HandScorer.createScorer(Pairs::new);
+        ArrayList<Card> hand5 = CardParser.parseHand("7H6C7D6D6C");
+        assertThat(scorer5.score(hand5), is(8));
     }
 
     @Test
     void checkFlush() {
-        HandScorer scorer = getScorer("1H2H3H4H5H");
-        assertThat(scorer.scoreFlush(), is(5));
-        HandScorer scorer1 = getScorer("3S3HJC3DKC");
-        assertThat(scorer1.scoreFlush(), is(1));
-        HandScorer scorer2 = getScorer("3C3CJC3CKC");
-        assertThat(scorer2.scoreFlush(), is(6));
+        Flush scorer0 = HandScorer.createScorer(Flush::new);
+        ArrayList<Card> hand0 = CardParser.parseHand("1H2H3H4H5H");
+        assertThat(scorer0.score(hand0), is(5));
+        Flush scorer1 = HandScorer.createScorer(Flush::new);
+        ArrayList<Card> hand1 = CardParser.parseHand("3S3HJC3DKC");
+        assertThat(scorer1.score(hand1), is(1));
+        Flush scorer2 = HandScorer.createScorer(Flush::new);
+        ArrayList<Card> hand2 = CardParser.parseHand("3C3CJC3CKC");
+        assertThat(scorer2.score(hand2), is(6));
     }
 
     @Test
     void checkFifteenTwos() {
-        HandScorer scorer = getScorer("1H2D3S4C5C");
-        assertThat(scorer.scoreFifteenTwos(), is(2));
-        HandScorer scorer1 = getScorer("7H6C7D9D8C");
-        assertThat(scorer1.scoreFifteenTwos(), is(6));
-        HandScorer scorer2 = getScorer("AHQC5D8D5C");
-        assertThat(scorer2.scoreFifteenTwos(), is(4));
+        FifteenTwos scorer0 = HandScorer.createScorer(FifteenTwos::new);
+        ArrayList<Card> hand0 = CardParser.parseHand("1H2D3S4C5C");
+        assertThat(scorer0.score(hand0), is(2));
+        FifteenTwos scorer1 = HandScorer.createScorer(FifteenTwos::new);
+        ArrayList<Card> hand1 = CardParser.parseHand("7H6C7D9D8C");
+        assertThat(scorer1.score(hand1), is(6));
+        FifteenTwos scorer2 = HandScorer.createScorer(FifteenTwos::new);
+        ArrayList<Card> hand2 = CardParser.parseHand("AHQC5D8D5C");
+        assertThat(scorer2.score(hand2), is(4));
     }
 
     @Test
