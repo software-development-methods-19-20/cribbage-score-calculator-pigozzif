@@ -55,38 +55,47 @@ public class ParseHandTest {
     }
 
     @Test
-    void scorePairs() {
+    void checkPairs() {
         HandScorer scorer = getScorer("1H2D3S4C5C");
-        assertThat(scorer.checkPairs(), is(0));
+        assertThat(scorer.scorePairs(), is(0));
         HandScorer scorer1 = getScorer("7H6C7D9D8C");
-        assertThat(scorer1.checkPairs(), is(2));
+        assertThat(scorer1.scorePairs(), is(2));
         HandScorer scorer2 = getScorer("QHQC8C9SQS");
-        assertThat(scorer2.checkPairs(), is(6));
+        assertThat(scorer2.scorePairs(), is(6));
         HandScorer scorer3 = getScorer("3S3H3D3DJC");
-        assertThat(scorer3.checkPairs(), is(12));
+        assertThat(scorer3.scorePairs(), is(12));
         HandScorer scorer4 = getScorer("AHAC9D9D8C");
-        assertThat(scorer4.checkPairs(), is(4));
+        assertThat(scorer4.scorePairs(), is(4));
         HandScorer scorer5 = getScorer("7H6C7D6D6C");
-        assertThat(scorer5.checkPairs(), is(8));
+        assertThat(scorer5.scorePairs(), is(8));
     }
 
     @Test
     void scoreFlush() {
         HandScorer scorer = getScorer("1H2H3H4H5H");
-        assertThat(scorer.checkFlush(), is(4));
+        assertThat(scorer.checkFlush(), is(5));
         HandScorer scorer1 = getScorer("3S3HJC3DKC");
         assertThat(scorer1.checkFlush(), is(1));
         HandScorer scorer2 = getScorer("3C3CJC3CKC");
-        assertThat(scorer2.checkFlush(), is(5));
+        assertThat(scorer2.checkFlush(), is(6));
     }
 
     @Test
     void scoreFifteenTwos() {
         HandScorer scorer = getScorer("1H2D3S4C5C");
-        assertThat(scorer.checkFifteenTwos(), is(0));
+        assertThat(scorer.checkFifteenTwos(), is(2));
         HandScorer scorer1 = getScorer("7H6C7D9D8C");
         assertThat(scorer1.checkFifteenTwos(), is(6));
-        HandScorer scorer4 = getScorer("AHQC5D8D5C");
-        assertThat(scorer4.checkFifteenTwos(), is(4));
+        HandScorer scorer2 = getScorer("AHQC5D8D5C");
+        assertThat(scorer2.checkFifteenTwos(), is(4));
+    }
+
+    @Test
+    void totalScore() {
+        HandScorer scorer = getScorer("5H5D5SJC5C");
+        assertThat(scorer.scoreHand(), is(29));
+        HandScorer scorer1 = getScorer("0DJHQSAC9D");
+        // THIS TEST FAILS. SHOULDN'T THE SCORE BE 0? WHY IS THERE A 0 IN THE HAND?
+        assertThat(scorer1.scoreHand(), is(4));
     }
 }

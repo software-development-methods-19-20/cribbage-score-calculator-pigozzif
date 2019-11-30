@@ -11,10 +11,7 @@ public class HandScorer {
     }
 
     public int scoreHand() {
-        int total = 0;
-        total += checkRuns();
-        total += checkPairs();
-        return total;
+        return checkRuns() + scorePairs() + checkFlush() + checkFifteenTwos();
     }
 
     public int checkRuns() {
@@ -38,17 +35,17 @@ public class HandScorer {
         return bestTotal + 1;
     }
 
-    public int checkPairs() {
+    public int scorePairs() {
         HashMap<Long, Integer> rules = new HashMap<>();
         rules.put((long) 2, 2);
         rules.put((long) 3, 6);
         rules.put((long) 4, 12);
-        return this.hand.stream().collect(Collectors.groupingBy(Card::rank, Collectors.counting())).values().stream().filter(x -> x > 1).mapToInt(rules::get).reduce(0, Integer::sum);
-        //return occurences.values().stream().filter(x -> x > 1).mapToInt(rules::get).reduce(0, Integer::sum);
+        return this.hand.stream().collect(Collectors.groupingBy(Card::rank, Collectors.counting())).values().stream().
+                filter(x -> x > 1).mapToInt(rules::get).reduce(0, Integer::sum);
     }
 
     public int checkFlush() {
-        int flushTotal = 0;
+        int flushTotal = 1;
         int jackTotal = 0;
         Suite starterSuite = this.hand.get(this.hand.size() - 1).suite();
         Suite precSuite = this.hand.get(0).suite();
@@ -56,24 +53,20 @@ public class HandScorer {
             Card c = this.hand.get(i);
             Suite currSuite = c.suite();
             if (c.rank().equals("J") & starterSuite == currSuite) {
-                jackTotal += 1;
+                jackTotal = 1;
             }
-            if (currSuite == precSuite) {
-                flushTotal += 1;
-            }
-            else {
-                flushTotal = 0;
-            }
+            flushTotal = (currSuite == precSuite) ? flushTotal + 1 : 0;
             precSuite = currSuite;
+        }
+        flushTotal = (flushTotal >= 4) ? 4 : 0;
+        if (flushTotal == 4 & precSuite == starterSuite) {
+            flushTotal += 1;
         }
         return flushTotal + jackTotal;
     }
 
     public int checkFifteenTwos() {
-        for (Card c: this.hand) {
-            int currValue = c.getValue();
-            return 0;
-        }
-        return 0;
+        FifteenTwos scorer = new FifteenTwos();
+        return scorer.checkFifteenTwos(this.hand);
     }
 }
